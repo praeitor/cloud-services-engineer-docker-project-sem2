@@ -5,10 +5,10 @@ WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
 
-COPY . ./
-RUN go build -o backend-app .
+COPY . .
 
-# Stage 2: runner
+RUN go build -o backend-app ./cmd/api
+
 FROM alpine:latest
 
 RUN adduser -D -u 1001 appuser
