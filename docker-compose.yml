@@ -8,6 +8,8 @@ services:
       - "80:8081"
     user: "1001:1001"
     restart: unless-stopped
+    volumes:
+      - backend-data:/app/data
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost:8081/health"]
       interval: 30s
@@ -32,6 +34,8 @@ services:
       backend:
         condition: service_healthy
     restart: unless-stopped
+    volumes:
+      - frontend-static:/usr/share/nginx/html
     networks:
       - momo-net
     deploy:
@@ -43,3 +47,7 @@ services:
 networks:
   momo-net:
     driver: bridge
+
+volumes:
+  backend-data:
+  frontend-static:
