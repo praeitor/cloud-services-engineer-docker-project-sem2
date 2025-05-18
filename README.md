@@ -20,6 +20,13 @@ docker ps
 
 # Остановка и удаление
 docker-compose down
+
+# Если двруг понадобится собрать по отедельности
+# front
+docker build -t docker-project-frontend:latest frontend/
+
+# back
+docker build -t docker-project-backend:latest backend/
 ```
 
 ---
@@ -40,6 +47,7 @@ docker-compose down
 - ✅ Ограничения CPU/памяти
 - ✅ Отсутствие dev-пакетов в финальных образах
 - ✅ Проверка состояния приложения через healthcheck
+- ✅ Есть проверка образов послеб сборки средствами trivy
 
 ---
 
@@ -47,6 +55,7 @@ docker-compose down
 
 - GitHub Actions: `.github/workflows/deploy.yaml`
 - Сборка и push в DockerHub: backend и frontend
+- Проверка backend и frontend средствами trivy
 - Секреты: `DOCKER_USER`, `DOCKER_PASSWORD`
 
 ---
@@ -61,6 +70,7 @@ docker-compose down
 - Безопасность реализована
 - Секреты через GitHub Secrets
 - CI/CD работает через GitHub Actions
+- Проверка trivy
 
 ---
 
