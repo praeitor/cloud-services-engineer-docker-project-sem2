@@ -1,8 +1,8 @@
 services:
   backend:
     build:
-      context: .
-      dockerfile: ./backend/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     user: "1001:1001"
@@ -10,13 +10,13 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.50"
+          cpus: "0.5"
           memory: "256M"
 
   frontend:
     build:
-      context: .
-      dockerfile: ./frontend/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "8081:8081"
     depends_on:
