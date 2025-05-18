@@ -1,0 +1,29 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+    ports:
+      - "80:80"
+    user: "1001:1001"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: "256M"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - backend
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: "0.25"
+          memory: "128M"
