@@ -17,6 +17,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         with:
           fail: true
+          args: detect --log-opts="--max-count=10"
 
   build_and_push_to_docker_hub:
       name: Push Docker image to DockerHub
