@@ -40,9 +40,8 @@ jobs:
     name: Scan Docker images with Trivy
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
-
     steps:
-      - name: Install Trivy
+      - name: Scan frontend image
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
