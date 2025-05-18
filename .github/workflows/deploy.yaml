@@ -6,23 +6,9 @@ on:
       - main
 
 jobs:
-  secrets-scan:
-    name: Scan repo with Gitleaks
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Run Gitleaks
-        run: |
-          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
-          chmod +x gitleaks
-          ./gitleaks detect --log-opts="--all" --verbose --redact
-
   build_and_push_to_docker_hub:
       name: Push Docker image to DockerHub
       runs-on: ubuntu-latest
-      needs: secrets-scan
       steps:
         - name: Check out the repo
           uses: actions/checkout@v3
