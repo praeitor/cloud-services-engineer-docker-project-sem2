@@ -59,6 +59,18 @@ jobs:
           exit-code: 0
           ignore-unfixed: true
 
+  secrets-scan:
+    name: Scan repo with Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          fail: true
+
   run-with-docker-compose:
     name: Push Docker image to DockerHub
     runs-on: ubuntu-latest
