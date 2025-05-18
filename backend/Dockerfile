@@ -22,7 +22,4 @@ COPY --from=builder /app/backend-app .
 
 EXPOSE 8081
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=5 \
-  CMD curl -f http://localhost:8081/health || exit 1
-
 CMD ["./backend-app"]
