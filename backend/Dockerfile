@@ -2,12 +2,13 @@ FROM golang:1.21-alpine AS builder
 
 WORKDIR /app
 
-COPY backend/go.mod backend/go.sum ./
+COPY go.mod go.sum ./
 RUN go mod download
 
-COPY backend/ ./
+COPY . ./
 RUN go build -o backend-app .
 
+# Stage 2: runner
 FROM alpine:latest
 
 RUN adduser -D -u 1001 appuser
