@@ -6,9 +6,22 @@ on:
       - main
 
 jobs:
+  secrets-scan:
+    name: Scan repo with Gitleaks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        with:
+          fail: true
+
   build_and_push_to_docker_hub:
       name: Push Docker image to DockerHub
       runs-on: ubuntu-latest
+      needs: secrets-scan
       steps:
         - name: Check out the repo
           uses: actions/checkout@v3
@@ -58,20 +71,6 @@ jobs:
           format: table
           exit-code: 0
           ignore-unfixed: true
-
-  secrets-scan:
-    name: Scan repo with Gitleaks
-    runs-on: ubuntu-latest
-    needs: build_and_push_to_docker_hub
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          fail: true
 
   run-with-docker-compose:
     name: Push Docker image to DockerHub
