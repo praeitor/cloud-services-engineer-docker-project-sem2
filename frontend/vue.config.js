@@ -2,7 +2,5 @@ module.exports = {
   devServer: {
     disableHostCheck: true,
   },
-  publicPath: process.env.NODE_ENV === 'production'
-    ? '/momo-store/'
-    : '/'
+  publicPath: process.env.VUE_APP_PUBLIC_PATH || '/'
 };

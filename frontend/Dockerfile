@@ -12,6 +12,8 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
+ENV NODE_ENV=production
+ENV VUE_APP_PUBLIC_PATH=/
 RUN npm run build
 
 FROM nginx:alpine
