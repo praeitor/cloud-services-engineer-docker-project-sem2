@@ -1,0 +1,23 @@
+# Бинарники и кеши
+*.exe
+*.out
+*.o
+*.a
+*.so
+
+# Go cache
+vendor/
+tmp/
+bin/
+*.test
+
+# IDE и системные файлы
+*.log
+*.swp
+.idea/
+.vscode/
+.DS_Store
+
+# Git
+.git
+.gitignore
