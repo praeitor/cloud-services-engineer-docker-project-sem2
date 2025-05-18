@@ -1,12 +1,20 @@
 services:
   backend:
+    container_name: momo-backend
     build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
-      - "80:80"
+      - "8081:8081"
     user: "1001:1001"
-    restart: always
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - momo-net
     deploy:
       resources:
         limits:
@@ -14,16 +22,24 @@ services:
           memory: "256M"
 
   frontend:
+    container_name: momo-frontend 
     build:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "80:8081"
     depends_on:
-      - backend
-    restart: always
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - momo-net
     deploy:
       resources:
         limits:
           cpus: "0.25"
           memory: "128M"
+
+networks:
+  momo-net:
+    driver: bridge

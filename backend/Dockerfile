@@ -11,7 +11,8 @@ RUN go build -o backend-app ./cmd/api
 
 FROM alpine:latest
 
-RUN adduser -D -u 1001 appuser
+RUN apk add --no-cache curl \
+    && adduser -D -u 1001 appuser
 USER appuser
 
 WORKDIR /app
