@@ -18,5 +18,5 @@ USER appuser
 WORKDIR /app
 COPY --from=builder /app/backend-app .
 
-EXPOSE 80
+EXPOSE 8081
 CMD ["./backend-app"]
