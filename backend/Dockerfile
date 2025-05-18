@@ -7,13 +7,14 @@ RUN go mod download
 
 COPY . .
 
-RUN go build -o backend-app ./cmd/api
+RUN go build -ldflags="-w -s" -o backend-app ./cmd/api
 
 FROM alpine:latest
 
 RUN apk add --no-cache \
     && addgroup -g 1001 -S appgroup \
     && adduser -u 1001 -S appuser -G appgroup
+
 USER appuser
 
 WORKDIR /app

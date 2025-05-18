@@ -1,27 +1,23 @@
 FROM node:18-alpine AS builder
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache python3 make g++
-
 WORKDIR /app
+
+RUN apk add --no-cache python3 make g++
 
 COPY package*.json ./
 RUN npm ci
 
 COPY . .
-
-ENV NODE_OPTIONS=--openssl-legacy-provider
-ENV NODE_ENV=production
-ENV VUE_APP_API_URL=/api
+ENV NODE_ENV=production \
+    VUE_APP_API_URL=/api \
+    NODE_OPTIONS=--openssl-legacy-provider
 
 RUN npm run build
 
 FROM nginx:alpine
 
-COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=builder /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /usr/share/nginx/html/momo-store
 
 EXPOSE 8081
